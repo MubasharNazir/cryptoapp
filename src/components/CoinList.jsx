@@ -160,46 +160,17 @@ const CoinList = ({ onCoinSelect, selectedCurrency = 'usd', onCurrencyChange }) 
   }
 
   return (
-    <div className="space-y-6">
-      {/* Live Update Status */}
-      <div className="flex items-center justify-between bg-light-card dark:bg-dark-card rounded-lg p-4 border border-light-border dark:border-dark-border">
-        <div className="flex items-center space-x-3">
-          <div className={`w-2 h-2 rounded-full ${isAutoRefreshing ? 'bg-green-500 animate-pulse' : 'bg-gray-400'}`}></div>
-          <span className="text-sm text-gray-600 dark:text-gray-400">
-            {isAutoRefreshing ? 'Live updates every 5s' : 'Auto-refresh paused'}
-          </span>
+    <div className="space-y-4">
+      {/* Simple Status Bar */}
+      <div className="flex items-center justify-between text-sm text-gray-600 dark:text-gray-400">
+        <div className="flex items-center space-x-2">
+          <div className={`w-2 h-2 rounded-full ${isAutoRefreshing ? 'bg-green-500' : 'bg-gray-400'}`}></div>
+          <span>Updates every 5s</span>
           {lastUpdate && (
-            <span className="text-xs text-gray-500 dark:text-gray-500">
-              Last updated: {lastUpdate.toLocaleTimeString()}
+            <span className="text-xs">
+              • {lastUpdate.toLocaleTimeString()}
             </span>
           )}
-          <span className={`text-xs px-2 py-1 rounded ${
-            dataSource === 'real' ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200' :
-            dataSource === 'cached' ? 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200' :
-            'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200'
-          }`}>
-            {dataSource === 'real' ? '🟢 Live Data' : 
-             dataSource === 'cached' ? '💾 Cached Data' : 
-             '⚡ Demo Data'}
-          </span>
-        </div>
-        <div className="flex items-center space-x-2">
-          <button
-            onClick={() => fetchCoins()}
-            className="px-3 py-1 text-xs bg-blue-600 hover:bg-blue-700 text-white rounded transition-colors"
-          >
-            Refresh Now
-          </button>
-          <button
-            onClick={() => setIsAutoRefreshing(!isAutoRefreshing)}
-            className={`px-3 py-1 text-xs rounded transition-colors ${
-              isAutoRefreshing 
-                ? 'bg-orange-600 hover:bg-orange-700 text-white' 
-                : 'bg-green-600 hover:bg-green-700 text-white'
-            }`}
-          >
-            {isAutoRefreshing ? 'Pause' : 'Resume'}
-          </button>
         </div>
       </div>
 

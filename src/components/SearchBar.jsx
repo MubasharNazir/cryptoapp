@@ -42,9 +42,9 @@ const SearchBar = ({ onSearch, onFilter, onCurrencyChange, selectedCurrency = 'u
   };
 
   return (
-    <div className={`space-y-3 ${className}`}>
-      {/* Top Row: Search and Currency Selector */}
-      <div className="flex gap-3">
+    <div className={`space-y-4 ${className}`}>
+      {/* Search and Currency - Simple Row */}
+      <div className="flex gap-4">
         {/* Search Input */}
         <div className="relative flex-1">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
@@ -53,58 +53,51 @@ const SearchBar = ({ onSearch, onFilter, onCurrencyChange, selectedCurrency = 'u
             placeholder="Search cryptocurrencies..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full pl-9 pr-9 py-2.5 rounded-lg border border-light-border dark:border-dark-border bg-white dark:bg-dark-card text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 text-sm"
+            className="w-full pl-9 pr-9 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
           {searchTerm && (
             <button
               onClick={clearSearch}
-              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
             >
               <X className="h-4 w-4" />
             </button>
           )}
         </div>
 
-        {/* Currency Selector */}
-        <div className="relative">
-          <select
-            value={selectedCurrency}
-            onChange={(e) => handleCurrencyChange(e.target.value)}
-            className="appearance-none bg-white dark:bg-dark-card border border-light-border dark:border-dark-border rounded-lg px-4 py-2.5 text-sm font-medium text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 cursor-pointer min-w-[100px]"
-          >
-            {currencies.map((currency) => (
-              <option key={currency.value} value={currency.value}>
-                {currency.icon} {currency.label}
-              </option>
-            ))}
-          </select>
-          <DollarSign className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4 pointer-events-none" />
+        {/* Simple Currency Toggle */}
+        <div className="flex bg-gray-100 dark:bg-gray-700 rounded-lg p-1">
+          {currencies.map((currency) => (
+            <button
+              key={currency.value}
+              onClick={() => handleCurrencyChange(currency.value)}
+              className={`px-3 py-1 rounded text-sm font-medium transition-colors ${
+                selectedCurrency === currency.value
+                  ? 'bg-blue-600 text-white'
+                  : 'text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white'
+              }`}
+            >
+              {currency.label}
+            </button>
+          ))}
         </div>
       </div>
 
-      {/* Filter Buttons */}
-      <div className="flex flex-wrap gap-2">
+      {/* Simple Filter Buttons */}
+      <div className="flex gap-2">
         {filters.map((filter) => (
           <button
             key={filter.value}
             onClick={() => handleFilterChange(filter.value)}
-            className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${
+            className={`px-3 py-1 rounded text-sm transition-colors ${
               selectedFilter === filter.value
-                ? 'bg-blue-600 text-white dark:bg-blue-500'
-                : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
+                ? 'bg-blue-600 text-white'
+                : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
             }`}
           >
             {filter.label}
           </button>
         ))}
-        
-        {/* Currency Info Badge */}
-        <div className="flex items-center px-3 py-1.5 bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 rounded-lg text-xs font-medium">
-          <span className="mr-1">
-            {currencies.find(c => c.value === selectedCurrency)?.icon}
-          </span>
-          Prices in {currencies.find(c => c.value === selectedCurrency)?.label}
-        </div>
       </div>
     </div>
   );

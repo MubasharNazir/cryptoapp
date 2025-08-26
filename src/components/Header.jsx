@@ -1,8 +1,8 @@
 import React from 'react';
-import { Moon, Sun, TrendingUp } from 'lucide-react';
+import { Moon, Sun, TrendingUp, Home } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext';
 
-const Header = () => {
+const Header = ({ onHomeClick = null }) => {
   const { isDark, toggleTheme } = useTheme();
 
   return (
@@ -20,6 +20,17 @@ const Header = () => {
           </div>
           
           <div className="flex items-center space-x-4">
+            {onHomeClick && (
+              <button
+                onClick={onHomeClick}
+                className="p-2 rounded-lg bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+                aria-label="Back to home"
+                title="Back to home"
+              >
+                <Home className="h-4 w-4 text-gray-600 dark:text-gray-400" />
+              </button>
+            )}
+            
             <button
               onClick={toggleTheme}
               className="p-2 rounded-lg bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
